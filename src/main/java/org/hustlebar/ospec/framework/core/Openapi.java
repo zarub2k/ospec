@@ -1,4 +1,4 @@
-package org.hustlebar.ospec.core;
+package org.hustlebar.ospec.framework.core;
 
 public class Openapi {
     private String version;
