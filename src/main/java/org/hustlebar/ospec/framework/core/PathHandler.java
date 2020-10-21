@@ -46,19 +46,25 @@ public class PathHandler {
     }
 
     private List<Parameter> getParameters(OPath oPath) {
-        List<OParameter> oParameters = oPath.parameters();
+        return getParameters(oPath.parameters());
+    }
+
+    private List<Parameter> getParameters(OMethod oMethod) {
+        return getParameters(oMethod.parameters());
+    }
+
+    private List<Parameter> getParameters(List<OParameter> oParameters) {
         if (oParameters == null || oParameters.size() == 0) {
             return null;
         }
-
         List<Parameter> parameters = new ArrayList<>(oParameters.size());
         for (OParameter oParameter: oParameters) {
             parameters.add(
-                new Parameter()
-                    .name(oParameter.name())
-                    .description(oParameter.description())
-                    .in(oParameter.mode())
-                    .required(oParameter.required())
+                    new Parameter()
+                            .name(oParameter.name())
+                            .description(oParameter.description())
+                            .in(oParameter.mode())
+                            .required(oParameter.required())
             );
         }
 
@@ -68,7 +74,8 @@ public class PathHandler {
     private void addMethod(PathItem pathItem, OMethod oMethod) {
         Operation operation = new Operation()
             .summary(oMethod.summary())
-            .description(oMethod.description());
+            .description(oMethod.description())
+            .parameters(getParameters(oMethod));
         switch (oMethod.name()) {
             case "get":
                 pathItem.get(operation);

@@ -43,7 +43,10 @@ public class ManagePackages implements OSpecification {
     private OPath packages() {
         return new OPath()
             .ctx("/packages")
-            .method(new OMethod().name("get").summary("Get all the packages available in the system"))
+            .method(
+                new OMethod().name("get").summary("Get all the packages available in the system")
+                    .parameter(new OParameter().name("page").mode(OParameterType.Query.value()).description("Defines the page number for the data").required(false))
+            )
             .method(new OMethod().name("post").summary("Create a package with the given data"));
     }
 
