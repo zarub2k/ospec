@@ -1,5 +1,6 @@
 package org.hustlebar.ospec.framework.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OPath {
@@ -7,7 +8,7 @@ public class OPath {
     private String summary;
     private String description;
 
-    private List<OMethod> methods;
+    private List<OMethod> methods = new ArrayList<>();
 
     public OPath() {}
 

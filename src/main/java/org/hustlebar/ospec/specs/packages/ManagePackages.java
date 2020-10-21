@@ -1,9 +1,7 @@
 package org.hustlebar.ospec.specs.packages;
 
 import org.hustlebar.ospec.framework.core.OSpecification;
-import org.hustlebar.ospec.framework.model.OInfo;
-import org.hustlebar.ospec.framework.model.OServer;
-import org.hustlebar.ospec.framework.model.Openapi;
+import org.hustlebar.ospec.framework.model.*;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;
@@ -15,7 +13,8 @@ public class ManagePackages implements OSpecification {
     public Openapi getOpenapi() {
         return new Openapi()
             .info(getInfo())
-            .servers(getServers());
+            .servers(getServers())
+            .paths(getPaths());
     }
 
     @Override
@@ -31,5 +30,28 @@ public class ManagePackages implements OSpecification {
         List<OServer> servers = new ArrayList<>();
         servers.add(new OServer().url("api.webmethodscloud.com").description("Access for production"));
         return servers;
+    }
+
+    @Override
+    public List<OPath> getPaths() {
+        List<OPath> paths = new ArrayList<>();
+        paths.add(packages());
+        paths.add(packagesWithId());
+        return paths;
+    }
+
+    private OPath packages() {
+        return new OPath()
+            .ctx("/packages")
+            .method(new OMethod().name("get").summary("Get all the packages available in the system"))
+            .method(new OMethod().name("post").summary("Create a package with the given data"));
+    }
+
+    private OPath packagesWithId() {
+        return new OPath()
+            .ctx("/packages/{id}")
+            .method(new OMethod().name("get").summary("Get the details of a package by the given id"))
+            .method(new OMethod().name("put").summary("Update a package with the given data"))
+            .method(new OMethod().name("delete").summary("Delete a package with the given id"));
     }
 }
