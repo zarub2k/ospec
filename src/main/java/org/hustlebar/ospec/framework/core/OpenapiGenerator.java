@@ -1,6 +1,7 @@
 package org.hustlebar.ospec.framework.core;
 
 import io.swagger.v3.oas.models.OpenAPI;
+import org.hustlebar.ospec.framework.model.Openapi;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
