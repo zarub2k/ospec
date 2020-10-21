@@ -1,9 +1,13 @@
 package org.hustlebar.ospec.framework.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class OMethod {
     private String name;
     private String summary;
     private String description;
+    private List<OParameter> parameters = new ArrayList<>();
 
     public OMethod() {}
 
@@ -28,6 +32,18 @@ public class OMethod {
     }
     public OMethod description(String description) {
         this.description = description;
+        return this;
+    }
+
+    public List<OParameter> parameters() {
+        return this.parameters;
+    }
+    public OMethod parameters(List<OParameter> parameters) {
+        this.parameters = parameters;
+        return this;
+    }
+    public OMethod parameter(OParameter parameter) {
+        this.parameters.add(parameter);
         return this;
     }
 }

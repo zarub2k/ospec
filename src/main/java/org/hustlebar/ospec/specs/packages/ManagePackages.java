@@ -50,6 +50,7 @@ public class ManagePackages implements OSpecification {
     private OPath packagesWithId() {
         return new OPath()
             .ctx("/packages/{id}")
+            .parameter(new OParameter().name("id").mode(OParameterType.Path.value()).description("Unique identifier of a package").required(true))
             .method(new OMethod().name("get").summary("Get the details of a package by the given id"))
             .method(new OMethod().name("put").summary("Update a package with the given data"))
             .method(new OMethod().name("delete").summary("Delete a package with the given id"));

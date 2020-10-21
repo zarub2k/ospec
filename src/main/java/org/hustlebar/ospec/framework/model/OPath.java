@@ -7,6 +7,7 @@ public class OPath {
     private String ctx;
     private String summary;
     private String description;
+    private List<OParameter> parameters = new ArrayList<>();
 
     private List<OMethod> methods = new ArrayList<>();
 
@@ -29,6 +30,18 @@ public class OPath {
     }
     public OPath method(OMethod method) {
         this.methods.add(method);
+        return this;
+    }
+
+    public List<OParameter> parameters() {
+        return this.parameters;
+    }
+    public OPath parameters(List<OParameter> parameters) {
+        this.parameters = parameters;
+        return this;
+    }
+    public OPath parameter(OParameter parameter) {
+        this.parameters.add(parameter);
         return this;
     }
 }

@@ -3,11 +3,14 @@ package org.hustlebar.ospec.framework.core;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.Paths;
+import io.swagger.v3.oas.models.parameters.Parameter;
 import org.hustlebar.ospec.framework.model.OMethod;
+import org.hustlebar.ospec.framework.model.OParameter;
 import org.hustlebar.ospec.framework.model.OPath;
 import org.hustlebar.ospec.framework.model.Openapi;
 
 import javax.enterprise.context.ApplicationScoped;
+import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
@@ -37,11 +40,35 @@ public class PathHandler {
             addMethod(pathItem, oMethod);
         }
 
+        //handle parameters
+        pathItem.parameters(getParameters(oPath));
         return pathItem;
     }
 
+    private List<Parameter> getParameters(OPath oPath) {
+        List<OParameter> oParameters = oPath.parameters();
+        if (oParameters == null || oParameters.size() == 0) {
+            return null;
+        }
+
+        List<Parameter> parameters = new ArrayList<>(oParameters.size());
+        for (OParameter oParameter: oParameters) {
+            parameters.add(
+                new Parameter()
+                    .name(oParameter.name())
+                    .description(oParameter.description())
+                    .in(oParameter.mode())
+                    .required(oParameter.required())
+            );
+        }
+
+        return parameters;
+    }
+
     private void addMethod(PathItem pathItem, OMethod oMethod) {
-        Operation operation = new Operation();
+        Operation operation = new Operation()
+            .summary(oMethod.summary())
+            .description(oMethod.description());
         switch (oMethod.name()) {
             case "get":
                 pathItem.get(operation);
