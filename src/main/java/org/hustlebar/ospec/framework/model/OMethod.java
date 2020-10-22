@@ -8,6 +8,7 @@ public class OMethod {
     private String summary;
     private String description;
     private List<OParameter> parameters = new ArrayList<>();
+    private List<OResponse> responses = new ArrayList<>();
 
     public OMethod() {}
 
@@ -44,6 +45,16 @@ public class OMethod {
     }
     public OMethod parameter(OParameter parameter) {
         this.parameters.add(parameter);
+        return this;
+    }
+
+    public List<OResponse> responses() { return this.responses; }
+    public OMethod responses(List<OResponse> responses) {
+        this.responses = responses;
+        return this;
+    }
+    public OMethod response(OResponse response) {
+        this.responses.add(response);
         return this;
     }
 }

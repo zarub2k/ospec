@@ -3,11 +3,13 @@ package org.hustlebar.ospec.framework.core;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.Paths;
+import io.swagger.v3.oas.models.media.Content;
+import io.swagger.v3.oas.models.media.MediaType;
+import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.parameters.Parameter;
-import org.hustlebar.ospec.framework.model.OMethod;
-import org.hustlebar.ospec.framework.model.OParameter;
-import org.hustlebar.ospec.framework.model.OPath;
-import org.hustlebar.ospec.framework.model.Openapi;
+import io.swagger.v3.oas.models.responses.ApiResponse;
+import io.swagger.v3.oas.models.responses.ApiResponses;
+import org.hustlebar.ospec.framework.model.*;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;
@@ -76,6 +78,10 @@ public class PathHandler {
             .summary(oMethod.summary())
             .description(oMethod.description())
             .parameters(getParameters(oMethod));
+        operation.responses(getResponses(oMethod));
+
+        //handle responses
+
         switch (oMethod.name()) {
             case "get":
                 pathItem.get(operation);
@@ -93,5 +99,37 @@ public class PathHandler {
                 pathItem.delete(operation);
                 break;
         }
+    }
+
+    private ApiResponses getResponses(OMethod oMethod) {
+        List<OResponse> oResponses = oMethod.responses();
+        if (oResponses == null || oResponses.isEmpty()) {
+            return null;
+        }
+
+        ApiResponses apiResponses = new ApiResponses();
+        for (OResponse oResponse: oResponses) {
+            apiResponses.addApiResponse(Integer.toString(oResponse.code()), getResponse(oResponse));
+        }
+
+        return apiResponses;
+    }
+
+    private ApiResponse getResponse(OResponse oResponse) {
+        ApiResponse response = new ApiResponse()
+                .description(oResponse.description());
+
+        List<Tuple> oContents = oResponse.contents();
+        if (oContents != null && !oContents.isEmpty()) {
+            Content content = new Content();
+            for (Tuple oContent: oContents) {
+                content.addMediaType(oContent.key(),
+                        new MediaType().schema(new Schema().$ref(oContent.value())));
+            }
+
+            response.content(content);
+        }
+
+        return response;
     }
 }

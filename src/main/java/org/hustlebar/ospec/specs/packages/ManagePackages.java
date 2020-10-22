@@ -46,6 +46,7 @@ public class ManagePackages implements OSpecification {
             .method(
                 new OMethod().name("get").summary("Get all the packages available in the system")
                     .parameter(new OParameter().name("page").mode(OParameterType.Query.value()).description("Defines the page number for the data").required(false))
+                    .response(new OResponse().code(200).description("Packages fetched successfully").content(new Tuple("application/json", "PackageList")))
             )
             .method(new OMethod().name("post").summary("Create a package with the given data"));
     }
