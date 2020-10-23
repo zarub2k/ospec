@@ -7,6 +7,7 @@ import io.swagger.v3.oas.models.media.Content;
 import io.swagger.v3.oas.models.media.MediaType;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.parameters.Parameter;
+import io.swagger.v3.oas.models.parameters.RequestBody;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 import org.hustlebar.ospec.framework.model.*;
@@ -78,9 +79,9 @@ public class PathHandler {
             .summary(oMethod.summary())
             .description(oMethod.description())
             .parameters(getParameters(oMethod));
-        operation.responses(getResponses(oMethod));
 
         //handle responses
+        operation.responses(getResponses(oMethod));
 
         switch (oMethod.name()) {
             case "get":
@@ -89,16 +90,32 @@ public class PathHandler {
 
             case "post":
                 pathItem.post(operation);
+                //handle request payload
+                operation.requestBody(getRequest(oMethod));
                 break;
 
             case "put":
                 pathItem.put(operation);
+                //handle request payload
+                operation.requestBody(getRequest(oMethod));
                 break;
 
             case "delete":
                 pathItem.delete(operation);
                 break;
         }
+    }
+
+    private RequestBody getRequest(OMethod oMethod) {
+        ORequest oRequest = oMethod.request();
+        if (oRequest == null) {
+            return null;
+        }
+
+        List<Tuple> contents = oRequest.contents();
+        RequestBody requestBody = new RequestBody().description(oRequest.description());
+        requestBody.content(getContent(contents));
+        return requestBody;
     }
 
     private ApiResponses getResponses(OMethod oMethod) {
@@ -120,16 +137,21 @@ public class PathHandler {
                 .description(oResponse.description());
 
         List<Tuple> oContents = oResponse.contents();
-        if (oContents != null && !oContents.isEmpty()) {
-            Content content = new Content();
-            for (Tuple oContent: oContents) {
-                content.addMediaType(oContent.key(),
-                        new MediaType().schema(new Schema().$ref(oContent.value())));
-            }
+        response.content(getContent(oContents));
+        return response;
+    }
 
-            response.content(content);
+    private Content getContent(List<Tuple> oContents) {
+        if (oContents == null || oContents.isEmpty()) {
+            return null;
         }
 
-        return response;
+        Content content = new Content();
+        for (Tuple oContent: oContents) {
+            content.addMediaType(oContent.key(),
+                    new MediaType().schema(new Schema().$ref(oContent.value())));
+        }
+
+        return content;
     }
 }

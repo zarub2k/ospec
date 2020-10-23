@@ -9,6 +9,7 @@ public class OMethod {
     private String description;
     private List<OParameter> parameters = new ArrayList<>();
     private List<OResponse> responses = new ArrayList<>();
+    private ORequest request;
 
     public OMethod() {}
 
@@ -55,6 +56,12 @@ public class OMethod {
     }
     public OMethod response(OResponse response) {
         this.responses.add(response);
+        return this;
+    }
+
+    public ORequest request() { return this.request; }
+    public OMethod request(ORequest request) {
+        this.request = request;
         return this;
     }
 }
