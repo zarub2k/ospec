@@ -20,11 +20,15 @@ public class OpenapiParser {
     @Inject
     PathHandler pathHandler;
 
+    @Inject
+    ComponentHandler componentHandler;
+
     public OpenAPI parse(Openapi openapi) {
         return new OpenAPI()
             .info(parseInfo(openapi))
             .servers(parserServers(openapi))
-            .paths(pathHandler.handle(openapi));
+            .paths(pathHandler.handle(openapi))
+            .components(componentHandler.handle(openapi));
     }
 
     private List<Server> parserServers(Openapi openapi) {

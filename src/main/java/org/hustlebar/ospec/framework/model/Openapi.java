@@ -8,6 +8,7 @@ public class Openapi {
     private OInfo info;
     private List<OServer> servers = new ArrayList<>();
     private List<OPath> paths = new ArrayList<>();
+    private OComponent component;
 
     public Openapi() {}
 
@@ -48,6 +49,14 @@ public class Openapi {
     }
     public Openapi path(OPath path) {
         this.paths.add(path);
+        return this;
+    }
+
+    public OComponent component() {
+        return this.component;
+    }
+    public Openapi component(OComponent component) {
+        this.component = component;
         return this;
     }
 }
