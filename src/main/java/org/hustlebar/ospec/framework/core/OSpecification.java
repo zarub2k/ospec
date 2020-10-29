@@ -1,9 +1,6 @@
 package org.hustlebar.ospec.framework.core;
 
-import org.hustlebar.ospec.framework.model.OInfo;
-import org.hustlebar.ospec.framework.model.OPath;
-import org.hustlebar.ospec.framework.model.OServer;
-import org.hustlebar.ospec.framework.model.Openapi;
+import org.hustlebar.ospec.framework.model.*;
 
 import java.util.List;
 
@@ -12,4 +9,5 @@ public interface OSpecification {
     OInfo getInfo();
     List<OServer> getServers();
     List<OPath> getPaths();
+    OComponent getComponent();
 }

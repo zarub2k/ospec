@@ -40,6 +40,12 @@ public class ManagePackages implements OSpecification {
         return paths;
     }
 
+    @Override
+    public OComponent getComponent() {
+        return new OComponent()
+            .schema(new OSchema().name("Package").clazz(Package.class));
+    }
+
     private OPath packages() {
         return new OPath()
             .ctx("/packages")
