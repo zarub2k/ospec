@@ -17,6 +17,9 @@ public class ComponentHandler {
     @Inject
     SchemaHandler schemaHandler;
 
+    @Inject
+    ExampleHandler exampleHandler;
+
     public Components handle(Openapi openapi) {
         return _handle(openapi);
     }
@@ -43,7 +46,7 @@ public class ComponentHandler {
     }
 
     private Map<String, Example> getExamples(OComponent oComponent) {
-        return null;
+        return exampleHandler.handle(oComponent);
     }
 
     private Map<String, Schema> getSchemas(OComponent component) {

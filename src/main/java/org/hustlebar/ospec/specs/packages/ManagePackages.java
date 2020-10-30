@@ -45,7 +45,8 @@ public class ManagePackages implements OSpecification {
     public OComponent getComponent() {
         return new OComponent()
             .schema(new OSchema().name("Package").clazz(Package.class))
-            .schema(new OSchema().name("Plan").clazz(Plan.class));
+            .schema(new OSchema().name("Plan").clazz(Plan.class))
+            .schema(new OSchema().name("PackageList").clazz(PackageList.class));
     }
 
     private OPath packages() {
