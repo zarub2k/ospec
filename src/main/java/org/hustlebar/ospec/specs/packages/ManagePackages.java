@@ -48,7 +48,11 @@ public class ManagePackages implements OSpecification {
             .schema(new OSchema().name("Plan").clazz(Plan.class))
             .schema(new OSchema().name("PackageList").clazz(PackageList.class))
             .example(new OExample<Package>().name("Package").sample(
-                new Package().id("abc").name("Sample package")));
+                new Package().id("abc").name("Sample package")))
+            .response(
+                new CResponse().name("400").description("The request was unacceptable, due to invalid payload")
+                    .media(new OResponseMedia().media("application/json").schemaRef("Error").exampleName("400").exampleRef("400"))
+            );
     }
 
     private OPath packages() {

@@ -1,8 +1,13 @@
 package org.hustlebar.ospec.framework.core;
 
+import io.swagger.v3.oas.models.examples.Example;
+import io.swagger.v3.oas.models.media.Content;
+import io.swagger.v3.oas.models.media.MediaType;
+import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import org.hustlebar.ospec.framework.model.CResponse;
 import org.hustlebar.ospec.framework.model.OComponent;
+import org.hustlebar.ospec.framework.model.OResponseMedia;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.HashMap;
@@ -30,6 +35,14 @@ public class ResponseHandler {
     }
 
     private ApiResponse getResponse(CResponse cResponse) {
-        return null;
+        OResponseMedia media = cResponse.media();
+        MediaType mediaType = new MediaType()
+                .schema(new Schema().$ref(media.schemaRef()))
+                .addExamples(media.exampleName(), new Example().$ref(media.exampleRef()));
+        return new ApiResponse()
+            .description(cResponse.description())
+            .content(
+                new Content().addMediaType(media.media(), mediaType)
+            );
     }
 }
