@@ -20,6 +20,9 @@ public class ComponentHandler {
     @Inject
     ExampleHandler exampleHandler;
 
+    @Inject
+    ResponseHandler responseHandler;
+
     public Components handle(Openapi openapi) {
         return _handle(openapi);
     }
@@ -42,7 +45,7 @@ public class ComponentHandler {
     }
 
     private Map<String, ApiResponse> getResponses(OComponent oComponent) {
-        return null;
+        return responseHandler.handle(oComponent);
     }
 
     private Map<String, Example> getExamples(OComponent oComponent) {
