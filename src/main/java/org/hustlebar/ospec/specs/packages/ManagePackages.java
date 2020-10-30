@@ -14,7 +14,8 @@ public class ManagePackages implements OSpecification {
         return new Openapi()
             .info(getInfo())
             .servers(getServers())
-            .paths(getPaths());
+            .paths(getPaths())
+            .component(getComponent());
     }
 
     @Override
@@ -43,7 +44,8 @@ public class ManagePackages implements OSpecification {
     @Override
     public OComponent getComponent() {
         return new OComponent()
-            .schema(new OSchema().name("Package").clazz(Package.class));
+            .schema(new OSchema().name("Package").clazz(Package.class))
+            .schema(new OSchema().name("Plan").clazz(Plan.class));
     }
 
     private OPath packages() {
