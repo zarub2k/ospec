@@ -34,14 +34,6 @@ public class ManagePackages implements OSpecification {
     }
 
     @Override
-    public List<OPath> getPaths() {
-        List<OPath> paths = new ArrayList<>();
-        paths.add(packages());
-        paths.add(packagesWithId());
-        return paths;
-    }
-
-    @Override
     public OComponent getComponent() {
         return new OComponent()
             .schema(new OSchema().name("Package").clazz(Package.class))
@@ -53,6 +45,14 @@ public class ManagePackages implements OSpecification {
                 new CResponse().name("400").description("The request was unacceptable, due to invalid payload")
                     .media(new OResponseMedia().media("application/json").schemaRef("Error").exampleName("400").exampleRef("400"))
             );
+    }
+
+    @Override
+    public List<OPath> getPaths() {
+        List<OPath> paths = new ArrayList<>();
+        paths.add(packages());
+        paths.add(packagesWithId());
+        return paths;
     }
 
     private OPath packages() {

@@ -8,6 +8,6 @@ public interface OSpecification {
     Openapi getOpenapi();
     OInfo getInfo();
     List<OServer> getServers();
-    List<OPath> getPaths();
     OComponent getComponent();
+    List<OPath> getPaths();
 }

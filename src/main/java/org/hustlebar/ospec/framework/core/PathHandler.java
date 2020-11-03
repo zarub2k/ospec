@@ -126,7 +126,8 @@ public class PathHandler {
 
         ApiResponses apiResponses = new ApiResponses();
         for (OResponse oResponse: oResponses) {
-            apiResponses.addApiResponse(Integer.toString(oResponse.code()), getResponse(oResponse));
+            apiResponses.addApiResponse(Integer.toString(oResponse.code()),
+                    getResponse(oResponse));
         }
 
         return apiResponses;
