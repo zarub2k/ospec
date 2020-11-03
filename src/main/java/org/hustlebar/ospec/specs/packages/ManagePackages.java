@@ -61,13 +61,13 @@ public class ManagePackages implements OSpecification {
             .method(
                 new OMethod().name("get").summary("Get all the packages available in the system")
                     .parameter(new OParameter().name("page").mode(OParameterType.Query.value()).description("Defines the page number for the data").required(false))
-                    .response(new OResponse().code(200).description("Packages fetched successfully").content(new Tuple("application/json", "PackageList")))
+                    .response(new OResponse().code(200).description("Packages fetched successfully").ref("PackageList"))
             )
             .method(
                 new OMethod().name("post").summary("Create a package with the given data")
                     .request(new ORequest().description("Create package payload").content(new Tuple("application/json", "PackageData")))
-                    .response(new OResponse().code(201).description("Package created successfully").content(new Tuple("application/json", "CreatedResponse")))
-                    .response(new OResponse().code(400).description("Package payload is not correct").content(new Tuple("application/json", "400")))
+                    .response(new OResponse().code(201).description("Package created successfully").ref("CreatedResponse"))
+                    .response(new OResponse().code(400).description("Package payload is not correct").ref("400"))
             );
     }
 

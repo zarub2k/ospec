@@ -6,6 +6,7 @@ import java.util.List;
 public class OResponse {
     private int code;
     private String description;
+    private String ref;
 
     private final List<Tuple> contents = new ArrayList<>();
 
@@ -20,6 +21,14 @@ public class OResponse {
     public String description() { return this.description; }
     public OResponse description(String description) {
         this.description = description;
+        return this;
+    }
+
+    public String ref() {
+        return this.ref;
+    }
+    public OResponse ref(String ref) {
+        this.ref = ref;
         return this;
     }
 

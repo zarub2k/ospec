@@ -133,12 +133,13 @@ public class PathHandler {
     }
 
     private ApiResponse getResponse(OResponse oResponse) {
-        ApiResponse response = new ApiResponse()
-                .description(oResponse.description());
+        return new ApiResponse()
+                .description(oResponse.description())
+                .$ref(oResponse.ref());
 
-        List<Tuple> oContents = oResponse.contents();
-        response.content(getContent(oContents));
-        return response;
+//        List<Tuple> oContents = oResponse.contents();
+//        response.content(getContent(oContents));
+//        return response;
     }
 
     private Content getContent(List<Tuple> oContents) {
@@ -148,6 +149,8 @@ public class PathHandler {
 
         Content content = new Content();
         for (Tuple oContent: oContents) {
+            content.addMediaType(oContent.key(),
+                new MediaType());
             content.addMediaType(oContent.key(),
                     new MediaType().schema(new Schema().$ref(oContent.value())));
         }
