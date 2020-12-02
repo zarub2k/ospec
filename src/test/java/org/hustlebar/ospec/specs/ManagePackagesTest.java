@@ -1,6 +1,7 @@
 package org.hustlebar.ospec.specs;
 
 import io.quarkus.test.junit.QuarkusTest;
+import io.swagger.v3.core.util.Json;
 import io.swagger.v3.core.util.Yaml;
 import io.swagger.v3.oas.models.OpenAPI;
 import org.hustlebar.ospec.framework.core.OpenapiGenerator;
@@ -22,7 +23,10 @@ public class ManagePackagesTest {
     public void testOpenapi() {
         Openapi openapi = managePackages.getOpenapi();
         OpenAPI api = generator.generate(openapi);
-        String pretty = Yaml.pretty(api);
-        System.out.println(pretty);
+//        String pretty = Yaml.pretty(api);
+//        System.out.println(pretty);
+
+        String jsonApi = Json.pretty(api);
+        System.out.println(jsonApi);
     }
 }
